@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
+import PlayerBar from './PlayerBar';
 
 class Album extends Component {
   constructor(props) {
@@ -45,6 +46,32 @@ class Album extends Component {
     }
   }
 
+  handlePrevClick() {
+    // Find the index of the current song
+    const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song );
+    // Calculate new index by subtracting 1 but not going below the first index of 0
+    const newIndex = Math.max(0, currentIndex - 1);
+    // Get the new song after calculations
+    const newSong = this.state.album.songs[newIndex];
+    // Call set song ont he newly calculated index value
+    this.setSong(newSong);
+    // Play the song
+    this.play(newSong);
+  }
+
+  handleNextClick() {
+    // Find the index of the current song
+    const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song );
+    // Calculate new index by subtracting the length of the songs array by one then adding 1 to the current index
+    const newIndex = Math.min(this.state.album.songs.length - 1, currentIndex + 1);
+    // Get the new song after calculations
+    const newSong = this.state.album.songs[newIndex];
+    // Call set song ont he newly calculated index value
+    this.setSong(newSong);
+    // Play the song
+    this.play(newSong);
+  }
+
   render() {
     return (
       <section className="album">
@@ -81,6 +108,13 @@ class Album extends Component {
             )}
           </tbody>
         </table>
+        <PlayerBar
+          isPlaying={this.state.isPlaying}
+          currentSong={this.state.currentSong}
+          handleSongClick={() => this.handleSongClick(this.state.currentSong)}
+          handlePrevClick={() => this.handlePrevClick()}
+          handleNextClick={() => this.handleNextClick()}
+        />
       </section>
     );
   }

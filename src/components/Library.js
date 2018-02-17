@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {Row, Col} from 'react-materialize';
 import albumData from './../data/albums';
 
 class Library extends Component {
@@ -9,18 +10,24 @@ class Library extends Component {
   }
   render() {
     return (
+      <div className="container">
       <section className='library'>
+      <Row>
         {
           this.state.albums.map( (album, index ) =>
           <Link to={`/album/${album.slug}`} key={index}>
-            <img src={album.albumCover} alt={album.title} />
-            <div>{album.title}</div>
-            <div>{album.artist}</div>
-            <div>{album.songs.length}</div>
+            <Col m={6} s={12}>
+            <img className="responsive-img" src={album.albumCover} alt={album.title} />
+                  <h4 className="center-align">{album.title}</h4>
+                  <p className="center-align">{album.artist}</p>
+                  <p className="center-align">{album.songs.length}</p>
+            </Col>
           </Link>
           )
-        }
+        }      
+        </Row>
       </section>
+    </div>
     );
   }
 }

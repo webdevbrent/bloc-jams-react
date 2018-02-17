@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Table} from 'react-materialize';
 import albumData from './../data/albums';
 import PlayerBar from './PlayerBar';
 
@@ -101,39 +102,33 @@ class Album extends Component {
 
   render (){
     return (
-      <section className="album">
-        <section id="album-info">
-          <img src={this.state.album.albumCover} alt="" id="album-cover-art"/>
-          <div className="album-details">
+      <section className="container">
+        <section id="album-info" className="center-align">
+          <img src={this.state.album.albumCover} alt="" className="responsive-img circle" height="220px" width="200px"/>
+          <div className="album-details center-align">
             <h1 id="album-title">{this.state.album.title}</h1>
             <h2 className="artist">{this.state.album.artist}</h2>
             <div id="release-info">{this.state.album.releaseInfo}</div>
           </div>
-        </section>
-        <table id="song-list">
-          <colgroup>
-            <col id="song-number-column"/>
-            <col id="song-title-column"/>
-            <col id="song-duration-column"/>
-          </colgroup>
+        </section>        
+        <Table id="song-list" centered hoverable bordered >
+          <thead>
+            <tr>
+              <th data-field="id">Song Number</th>
+              <th data-field="name">Song Name</th>
+              <th data-field="duration">Song Duration</th>
+            </tr>
+          </thead>
           <tbody>
-            {this.state.album.songs.map( (song, index) => 
+          {this.state.album.songs.map( (song, index) => 
               <tr className={song} key={index} onClick={() => this.handleSongClick(song)} >
-              <td className="song-number">{index+1}</td>
-                <td className="song-actions">
-                  <button>
-                    <span className="ion-play"></span>
-                  </button>
-                  <button>
-                  <span className="ion-pause"></span>
-                  </button>
-                </td>         
-                <td className="song-title">{song.title}</td>
-                <td className="song-duration">{this.formatTime(song.duration)}</td>
+              <td className="song-number">{index+1}</td>         
+              <td className="song-title">{song.title}</td>
+              <td className="song-duration">{this.formatTime(song.duration)}</td>
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
         <PlayerBar 
           isPlaying={this.state.isPlaying} 
           currentSong={this.state.currentSong}

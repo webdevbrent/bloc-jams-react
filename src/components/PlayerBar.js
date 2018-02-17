@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
+import {Icon, Table} from 'react-materialize';
 
 class PlayerBar extends Component {
   render() {
     return(
-      <section className="player-bar">
-        <section id="buttons">
-          <button id="previous" onClick={this.props.handlePrevClick}>
-            <span className="ion-skip-backward"></span>
+
+      <Table centered>
+      <tbody>
+        <tr>
+          <td>
+          <button className="btn waves-effect waves-light" id="previous" onClick={this.props.handlePrevClick}>
+            <Icon small >skip_previous</Icon>
           </button>
-          <button id="play-pause" onClick={this.props.handleSongClick}>
-            <span className={this.props.isPlaying ? 'ion-pause' : 'ion-play'}></span>
+          </td>
+          <td>
+          <button className="btn waves-effect waves-light" id="play-pause" onClick={this.props.handleSongClick}>
+          <Icon small className={this.props.isPlaying ? 'ion-pause' : 'ion-play'}></Icon>
           </button>
-          <button id="next" onClick={this.props.handleNextClick}>
-            <span className="ion-skip-forward"></span>
+          </td>
+          <td>
+          <button className="btn waves-effect waves-light" id="next" onClick={this.props.handleNextClick}>
+            <Icon small>skip_next</Icon>
           </button>
-        </section>
-        <section id="time-control">                                                                    
-          <div className="current-time">{this.props.formatTime(this.props.currentTime)}</div>
+          </td>
+          <td>{this.props.formatTime(this.props.currentTime)}</td>
+          <td>
           <input 
             type="range" 
             className="seek-bar" 
@@ -25,22 +33,23 @@ class PlayerBar extends Component {
             min="0" 
             step="0.01" 
             onChange={this.props.handleTimeChange}
-          />   
-          <div className="total-time">{this.props.formatTime(this.props.duration)}</div> 
-        </section>
-        <section id="volume-control">
-          <div className="icon ion-volume-low"></div>
+          />
+          {this.props.formatTime(this.props.duration)}
+          </td>
+          <td>
           <input type="range" 
                  className="seek-bar" 
                  value={this.props.volume} 
                  max="1" 
                  min="0" 
                  step="0.01" 
-                 onChange={this.props.handleVolumeChange}
+                 onChange={this.props.handleVolumeChange}    
           />
-          <div className="icon ion-volume-high"></div>
-        </section>
-      </section>
+          <Icon tiny>volume_up</Icon>
+          </td>
+        </tr>
+        </tbody>
+      </Table>
     );
   }
 }
